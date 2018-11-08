@@ -8,7 +8,6 @@ QHOME = os.environ["QHOME"]
 def start_backend():
   os.system(QHOME + "/l32/q backend.q &")
 
-
 def stop_backend():
   os.system("pkill -f \"" + QHOME + "/l32/q backend.q\"")
 
@@ -18,13 +17,11 @@ def default_path():
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("Hello there, my favourite browser:  python-requests/2.20.1")
 
-
 @test
 def hello():
   res = requests.get("http://localhost:8000/hello")
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("hello")
-
 
 @test
 def json():
@@ -32,13 +29,11 @@ def json():
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to({"a":1,"b":2,"c":3})
 
-
 @test
 def goodbye():
   res = requests.post("http://localhost:8000/goodbye", json={"name":"python"})
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("Goodbye now python")
-
 
 @test
 def cookie():
@@ -47,7 +42,6 @@ def cookie():
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("Check your cookies!")
   assert_that(session.cookies.get_dict()).is_equal_to({"sid":"s355IonT0k3n"})
-
 
 @test
 def cors():
@@ -64,13 +58,11 @@ def cors():
   assert_that(get.headers["Access-Control-Allow-Origin"]).is_equal_to("http://localhost:3000")
   assert_that(get.status_code).is_equal_to(200)
 
-
 @test
 def path_args():
   res = requests.get("http://localhost:8000/pathargs/one/two")
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("pathargs -> one -> two")
-
 
 @test
 def path_args_with_cookies():
