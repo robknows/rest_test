@@ -11,15 +11,6 @@ def test(test_function):
     test_wrapper.__basename__ = test_function.__name__
     return test_wrapper
 
-QHOME = os.environ["QHOME"]
-
-def start_backend():
-  os.system(QHOME + "/l32/q backend.q &")
-
-
-def stop_backend():
-  os.system("pkill -f \"" + QHOME + "/l32/q backend.q\"")
-
 def get_test_functions(local_values):
     test_functions = []
     local_function_names = [name for name in local_values if local_values[name].__class__.__name__ == "function"]
@@ -64,7 +55,7 @@ def print_results(results):
 
     print("")
 
-def main(local_values):
+def main(local_values, start_backend, stop_backend):
     print("Running: " + str(sys.argv))
 
     if len(sys.argv) != 2:

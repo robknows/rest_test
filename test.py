@@ -3,6 +3,15 @@ import requests
 from resttest import *
 from assertpy import assert_that
 
+QHOME = os.environ["QHOME"]
+
+def start_backend():
+  os.system(QHOME + "/l32/q backend.q &")
+
+
+def stop_backend():
+  os.system("pkill -f \"" + QHOME + "/l32/q backend.q\"")
+
 @test
 def default_path():
   res = requests.get("http://localhost:8000/")
@@ -74,5 +83,5 @@ def path_args_with_cookies():
   assert_that(res.status_code).is_equal_to(200)
   assert_that(res.json()).is_equal_to("pathargs -> one -> two")
 
-main(locals())
+main(locals(), start_backend, stop_backend)
 exit(0)
