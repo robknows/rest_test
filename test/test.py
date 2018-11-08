@@ -1,6 +1,6 @@
 import requests
 
-from resttest import *
+from rest_test import *
 from assertpy import assert_that
 
 QHOME = os.environ["QHOME"]
