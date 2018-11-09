@@ -33,4 +33,8 @@ Where `start_server` and `stop_server` are functions which start and stop the se
 
 Finally, run your the test suite you created with the above steps by running from the command line
 
-`python3 my_tests.py`
+`python3 my_tests.py r # 'r' if the test should (r)un the server itself using the provided functions`
+
+Or
+
+`python3 my_tests.py a # 'a' if the server is (a)lready running`
