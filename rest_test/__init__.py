@@ -47,11 +47,20 @@ def run_tests(local_values):
 
 def print_results(results):
     print("=== results ===\n")
+    total_passed = 0
+    total_failed = 0
     for test_function_name in results:
         if results[test_function_name]:
             print(colored("- " + test_function_name + " - pass", "green"))
+            total_passed += 1
         else:
             print(colored("- " + test_function_name + " - fail", "red"))
+            total_failed += 1
+
+    print("")
+    print(colored("=== " + str(total_passed) + " tests passed ===", "green"))
+    if (total_failed > 0):
+        print(colored("=== " + str(total_failed) + " tests failed ===", "red"))
 
     print("")
 
