@@ -28,12 +28,17 @@ def run_test(test):
     test()
     print(colored("- " + test.__basename__ + " - pass", "green"))
     print("=== === ===")
-    return True
+    return 0
   except AssertionError as e:
     print(colored(str(e), "red"))
     print(colored("- " + test.__basename__ + " - fail", "red"))
     print("=== === ===")
-    return False
+    return 1
+  except Exception as e:
+    print(colored(str(e), "red"))
+    print(colored("- " + test.__basename__ + " - error", "red"))
+    print("=== === ===")
+    return 2
 
 usage = "USAGE: " + sys.argv[0] + " [a|r]\na => don't start the server because it's (a)lready running.\nr => (r)un the server."
 
@@ -50,11 +55,14 @@ def print_results(results):
     total_passed = 0
     total_failed = 0
     for test_function_name in results:
-        if results[test_function_name]:
+        if results[test_function_name] == 0:
             print(colored("- " + test_function_name + " - pass", "green"))
             total_passed += 1
-        else:
+        elif results[test_function_name] == 1:
             print(colored("- " + test_function_name + " - fail", "red"))
+            total_failed += 1
+        elif results[test_function_name] == 2:
+            print(colored("- " + test_function_name + " - error", "red"))
             total_failed += 1
 
     print("")
