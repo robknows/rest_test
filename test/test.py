@@ -1,3 +1,4 @@
+import os
 import requests
 
 from rest_test import *
