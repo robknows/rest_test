@@ -1,6 +1,7 @@
 # Rest Test
 
-For lighweight testing of RESTful APIs
+For lighweight testing of RESTful APIs. There is an example of what a
+rest_test looks like at test/test.py.
 
 # Usage
 
