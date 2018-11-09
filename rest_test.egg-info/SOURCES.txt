@@ -1,7 +1,6 @@
 README.md
 setup.py
 rest_test/__init__.py
-rest_test/rest_test.py
 rest_test.egg-info/PKG-INFO
 rest_test.egg-info/SOURCES.txt
 rest_test.egg-info/dependency_links.txt
