@@ -39,3 +39,8 @@ Finally, run your the test suite you created with the above steps by running fro
 Or
 
 `python3 my_tests.py a # 'a' if the server is (a)lready running`
+
+# Coming soon
+
+Run main without needing to specify any kind of setup/teardown to be more fit
+for applications which are actually not RESTful APIs.
