@@ -6,4 +6,3 @@ rest_test.egg-info/SOURCES.txt
 rest_test.egg-info/dependency_links.txt
 rest_test.egg-info/requires.txt
 rest_test.egg-info/top_level.txt
-test/test.py

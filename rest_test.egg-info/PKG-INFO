@@ -49,4 +49,9 @@ Description: # Rest Test
         
         `python3 my_tests.py a # 'a' if the server is (a)lready running`
         
+        # Coming soon
+        
+        Run main without needing to specify any kind of setup/teardown to be more fit
+        for applications which are actually not RESTful APIs.
+        
 Platform: UNKNOWN
