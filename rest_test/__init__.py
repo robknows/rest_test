@@ -67,6 +67,8 @@ def print_results(results):
     print(colored("=== " + str(total_passed) + " tests passed ===", "green"))
     if (total_failed > 0):
         print(colored("=== " + str(total_failed) + " tests failed ===", "red"))
+    else:
+        print(colored("=== No failures ===", "green"))
 
     print("")
 
