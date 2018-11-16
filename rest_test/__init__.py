@@ -72,7 +72,7 @@ def print_results(results):
 
     print("")
 
-def main(local_values, start_backend, stop_backend):
+def main(local_values, start_backend=None, stop_backend=None):
     print("Running: " + str(sys.argv))
 
     if len(sys.argv) != 2:
