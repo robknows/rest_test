@@ -40,8 +40,6 @@ def run_test(test):
     print("=== === ===")
     return 2
 
-usage = "USAGE: " + sys.argv[0] + " [a|r]\na => don't start the server because it's (a)lready running.\nr => (r)un the server."
-
 def run_tests(local_values):
     results = {}
     for test_function in get_test_functions(local_values):
@@ -73,15 +71,24 @@ def print_results(results):
     print("")
 
 def main(local_values, start_backend=None, stop_backend=None):
-    print("Running: " + str(sys.argv))
+    usage = "USAGE: " + sys.argv[0] + " [a|r]\n" + \
+            "a       => don't start the server because it's (a)lready running.\n" + \
+            "r       => (r)un the server.\n" + \
+            "No args => There is no server to run or not run.\n" + \
+            "           Run the test script of other programs."
 
-    if len(sys.argv) != 2:
-        print(usage)
-        exit(1)
-    elif sys.argv[1] == "a":  # 'a' is for 'already running'
+    print("Running: " + str(sys.argv) + "\n")
+
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "a":  # 'a' is for 'already running'
+            start_server = False
+        elif sys.argv[1] == "r":  # 'r' is for 'run it yourself'
+            start_server = True
+        else:
+            print(usage)
+            exit(1)
+    elif len(sys.argv) == 1:
         start_server = False
-    elif sys.argv[1] == "r":  # 'r' is for 'run it yourself'
-        start_server = True
     else:
         print(usage)
         exit(1)
