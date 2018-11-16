@@ -70,10 +70,12 @@ def print_results(results):
 
     print("")
 
-def main(local_values, start_backend=None, stop_backend=None):
+def main(local_values, start_server=None, stop_server=None):
     usage = "USAGE: " + sys.argv[0] + " [a|r]\n" + \
             "a       => don't start the server because it's (a)lready running.\n" + \
-            "r       => (r)un the server.\n" + \
+            "r       => (r)un the server in the tests.\n" + \
+            "           You will need to define the start and stop functions and\n" + \
+            "           pass them to `main` in the test script.\n" + \
             "No args => There is no server to run or not run.\n" + \
             "           Run the test script of other programs."
 
@@ -81,29 +83,29 @@ def main(local_values, start_backend=None, stop_backend=None):
 
     if len(sys.argv) == 2:
         if sys.argv[1] == "a":  # 'a' is for 'already running'
-            start_server = False
-        elif sys.argv[1] == "r":  # 'r' is for 'run it yourself'
-            start_server = True
+            using_server = False
+        elif sys.argv[1] == "r":  # 'r' is for 'run it in the tests'
+            using_server = True
         else:
             print(usage)
             exit(1)
     elif len(sys.argv) == 1:
-        start_server = False
+        using_server = False
     else:
         print(usage)
         exit(1)
 
-    if start_server:
-        print("=== starting backend ===")
-        start_backend()
+    if using_server:
+        print("=== starting server ===")
+        start_server()
         time.sleep(1)
 
     print("=== starting tests ===")
     results = run_tests(local_values)
     print_results(results)
 
-    if start_server:
-        print("=== killing backend ===")
-        stop_backend()
+    if using_server:
+        print("=== killing server ===")
+        stop_server()
 
     print("=== finished tests ===")
