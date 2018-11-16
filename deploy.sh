@@ -7,7 +7,7 @@ python3 setup.py sdist
 cowsay "Created pip package"
 sed -i "s/$versionNumber.0/VERSION_NUMBER/g" setup.py
 git add .
-git commit -am"Deploying version $versionNumber"
+git commit -am"Autocommit: Deploying version $versionNumber"
 git push
 cowsay "Pushed version $versionNumber to Github."
 nextVersionNumber="$((1 + $versionNumber)).0"
