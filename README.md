@@ -3,7 +3,7 @@
 For lighweight testing of RESTful APIs. There is an example of what a
 rest_test looks like at test/test.py.
 
-# Usage
+# Intended Usage
 
 Install with
 
@@ -40,7 +40,26 @@ Or
 
 `python3 my_tests.py a # 'a' if the server is (a)lready running`
 
-# Coming soon
+# Usage in general
 
-Run main without needing to specify any kind of setup/teardown to be more fit
-for applications which are actually not RESTful APIs.
+You can also use rest_test to write dead-simple boilerplate-less tests which having no server to start and just create and exercise normal objects, again using your favourite assertions library.
+
+Here is a stupid test.
+
+```
+from rest_test import *
+from assertpy import assert_that
+
+@test
+def can_put_two_and_two_together():
+    assert_that(2 + 2).is_equal_to(4)
+    
+main(locals())
+exit(0)
+```
+
+And here is how you'd run it.
+
+```
+$ python3 test.py
+```
