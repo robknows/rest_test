@@ -11,5 +11,7 @@ git commit -am"Autocommit: Deploying version $nextVersionNumber"
 git push
 cowsay "Pushed version $nextVersionNumber to Github."
 cowsay "Saving new version number '$nextVersionNumber' to file 'versionNumber'"
+rm versionNumber
+echo "$nextVersionNumber" > versionNumber
 
 exit 0
