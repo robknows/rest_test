@@ -63,3 +63,12 @@ And here is how you'd run it.
 ```
 $ python3 test.py
 ```
+
+# Todo
+
+- Create @before_all (aka start_server), @after_all (aka stop_server),
+@before_each, @after_each
+
+- Specify a particular test to run
+
+- Binary for running all (rest_test)s in a directory (like test/).
