@@ -1,16 +1,15 @@
 set -e
 
 versionNumber=`cat versionNumber`
-cowsay "Packaging up version $versionNumber."
-sed -i "s/VERSION_NUMBER/$versionNumber.0/g" setup.py
+nextVersionNumber="$((1 + $versionNumber))"
+cowsay "Packaging up version $nextVersionNumber."
+sed -i "s/$versionNumber.0/$nextVersionNumber.0/g" setup.py
 python3 setup.py sdist
 cowsay "Created pip package"
-sed -i "s/$versionNumber.0/VERSION_NUMBER/g" setup.py
 git add .
-git commit -am"Autocommit: Deploying version $versionNumber"
+git commit -am"Autocommit: Deploying version $nextVersionNumber"
 git push
-cowsay "Pushed version $versionNumber to Github."
-nextVersionNumber="$((1 + $versionNumber)).0"
-cowsay "Next version number would be $nextVersionNumber"
+cowsay "Pushed version $nextVersionNumber to Github."
+cowsay "Saving new version number '$nextVersionNumber' to file 'versionNumber'"
 
 exit 0

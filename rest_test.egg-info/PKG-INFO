@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: rest-test
-Version: 2.0
+Version: 3.0
 Summary: Create tidy integration tests for a RESTful API.
 Home-page: https://github.com/robknows/rest_test
 Author: Rob Moore
