@@ -91,5 +91,4 @@ def path_args_with_cookies():
     assert_that(res.json()).is_equal_to("pathargs -> one -> two")
 
 
-main(locals())
-exit(0)
+exit(main(locals()))

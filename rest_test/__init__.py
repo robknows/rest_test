@@ -52,6 +52,7 @@ def get_test_maintenance_functions(local_values):
 
     return setup_function, teardown_function
 
+
 def run_test(test):
     print("=== === ===")
     print("Running: " + test.__basename__)
@@ -106,6 +107,14 @@ def print_results(results):
     print("")
 
 
+def all_passed(results):
+    for test_function_name in results:
+        if not results[test_function_name] == 0:
+            return False
+
+    return True
+
+
 def main(local_values):
     start_server, stop_server = get_test_maintenance_functions(local_values)
     using_server = start_server is not None and stop_server is not None
@@ -131,3 +140,9 @@ def main(local_values):
         stop_server()
 
     print("=== finished tests ===")
+
+    success = all_passed(results)
+    if success:
+        return 0
+    else:
+        return 1

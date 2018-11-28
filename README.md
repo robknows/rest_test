@@ -38,18 +38,18 @@ def stop_server():
 Run all the tests (marked by `@test`) in the file by adding the following to the end of the file
 
 ```python
-main(locals())
+exit(main(locals()))
 ```
 
 Finally, run your the test suite you created with the above steps by running from the command line
 
 `python3 my_tests.py`
 
+If all the tests pass, the exit code will be 0. Otherwise, it will be 1.
+
 # Todo
 
 - Create @before_each, @after_each
-
-- Exit code
 
 - Specify a particular test to run
 
