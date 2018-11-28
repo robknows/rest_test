@@ -1,4 +1,3 @@
-import sys
 import time
 import traceback
 
@@ -13,6 +12,22 @@ def test(test_function):
     return test_wrapper
 
 
+def setup(setup_function):
+    def setup_wrapper():
+        setup_function()
+
+    setup_wrapper.__basename__ = setup_function.__name__
+    return setup_wrapper
+
+
+def teardown(teardown_function):
+    def teardown_wrapper():
+        teardown_function()
+
+    teardown_wrapper.__basename__ = teardown_function.__name__
+    return teardown_wrapper
+
+
 def get_test_functions(local_values):
     test_functions = []
     local_function_names = [name for name in local_values if local_values[name].__class__.__name__ == "function"]
@@ -23,6 +38,19 @@ def get_test_functions(local_values):
 
     return test_functions
 
+
+def get_test_maintenance_functions(local_values):
+    setup_function = None
+    teardown_function = None
+    local_function_names = [name for name in local_values if local_values[name].__class__.__name__ == "function"]
+    for function_name in local_function_names:
+        function = local_values[function_name]
+        if function.__name__ == "setup_wrapper":
+            setup_function = function
+        elif function.__name__ == "teardown_wrapper":
+            teardown_function = function
+
+    return setup_function, teardown_function
 
 def run_test(test):
     print("=== === ===")
@@ -78,33 +106,19 @@ def print_results(results):
     print("")
 
 
-def main(local_values, start_server=None, stop_server=None):
-    usage = "USAGE: " + sys.argv[0] + " [a|r]\n" + \
-            "a       => don't start the server because it's (a)lready running.\n" + \
-            "r       => (r)un the server in the tests.\n" + \
-            "           You will need to define the start and stop functions and\n" + \
-            "           pass them to `main` in the test script.\n" + \
-            "No args => There is no server to run or not run.\n" + \
-            "           Run the test script of other programs."
+def main(local_values):
+    start_server, stop_server = get_test_maintenance_functions(local_values)
+    using_server = start_server is not None and stop_server is not None
 
-    print("Running: " + str(sys.argv) + "\n")
-
-    if len(sys.argv) == 2:
-        if sys.argv[1] == "a":  # 'a' is for 'already running'
-            using_server = False
-        elif sys.argv[1] == "r":  # 'r' is for 'run it in the tests'
-            using_server = True
-        else:
-            print(usage)
-            exit(1)
-    elif len(sys.argv) == 1:
-        using_server = False
-    else:
-        print(usage)
-        exit(1)
+    if start_server is not None and stop_server is None:
+        print(colored(f"Not running @setup ({start_server.__basename__}) because no @teardown is defined. " +
+                      "They must be used together.\n", "yellow"))
+    elif stop_server is not None and start_server is None:
+        print(colored(f"Not running @teardown ({stop_server.__basename__}) because no @setup is defined. " +
+                      "They must be used together.\n", "yellow"))
 
     if using_server:
-        print("=== starting server ===")
+        print(f"=== running \"{start_server.__basename__}\" ===")
         start_server()
         time.sleep(1)
 
@@ -113,7 +127,7 @@ def main(local_values, start_server=None, stop_server=None):
     print_results(results)
 
     if using_server:
-        print("=== killing server ===")
+        print(f"=== running \"{stop_server.__basename__}\" ===")
         stop_server()
 
     print("=== finished tests ===")

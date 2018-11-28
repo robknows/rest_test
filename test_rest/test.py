@@ -8,10 +8,12 @@ from rest_test import *
 QHOME = os.environ["QHOME"]
 
 
+@setup
 def start_backend():
     os.system(QHOME + "/m32/q backend.q &")
 
 
+@teardown
 def stop_backend():
     os.system("pkill -f \"" + QHOME + "/m32/q backend.q\"")
 
@@ -89,5 +91,5 @@ def path_args_with_cookies():
     assert_that(res.json()).is_equal_to("pathargs -> one -> two")
 
 
-main(locals(), start_backend, stop_backend)
+main(locals())
 exit(0)
