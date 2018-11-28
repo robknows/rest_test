@@ -1,18 +1,17 @@
 Metadata-Version: 1.0
 Name: rest-test
-Version: 3.0
+Version: 4.0
 Summary: Create tidy integration tests for a RESTful API.
 Home-page: https://github.com/robknows/rest_test
 Author: Rob Moore
 Author-email: robmoore121@gmail.com
 License: JSON
-Description-Content-Type: UNKNOWN
 Description: # Rest Test
         
         For lighweight testing of RESTful APIs. There is an example of what a
         rest_test looks like at test/test.py.
         
-        # Intended Usage
+        # Usage
         
         Install with
         
@@ -24,7 +23,7 @@ Description: # Rest Test
         
         Write a test like
         
-        ```
+        ```python
         @test
         def can_say_hello():
           res = requests.get("http://localhost:8000/hello")
@@ -32,45 +31,36 @@ Description: # Rest Test
           assert_that(res.json()).is_equal_to("hello")
         ```
         
+        If you need to, write code to start and stop your server like
+        
+        ```python
+        @setup
+        def start_server():
+            os.system("./run-my-server &")
+        
+        @teardown
+        def stop_server():
+            os.system("pkill -f \"run-my-server\"")
+        ```
+        
         Run all the tests (marked by `@test`) in the file by adding the following to the end of the file
         
+        ```python
+        exit(main(locals()))
         ```
-        main(locals(), start_server, stop_server)
-        exit(0)
-        ```
-        
-        Where `start_server` and `stop_server` are functions which start and stop the server, respectively.
         
         Finally, run your the test suite you created with the above steps by running from the command line
         
-        `python3 my_tests.py r # 'r' if the test should (r)un the server itself using the provided functions`
+        `python3 my_tests.py`
         
-        Or
+        If all the tests pass, the exit code will be 0. Otherwise, it will be 1.
         
-        `python3 my_tests.py a # 'a' if the server is (a)lready running`
+        # Todo
         
-        # Usage in general
+        - Create @before_each, @after_each
         
-        You can also use rest_test to write dead-simple boilerplate-less tests which having no server to start and just create and exercise normal objects, again using your favourite assertions library.
+        - Specify a particular test to run
         
-        Here is a stupid test.
-        
-        ```
-        from rest_test import *
-        from assertpy import assert_that
-        
-        @test
-        def can_put_two_and_two_together():
-            assert_that(2 + 2).is_equal_to(4)
-            
-        main(locals())
-        exit(0)
-        ```
-        
-        And here is how you'd run it.
-        
-        ```
-        $ python3 test.py
-        ```
+        - Binary for running all (rest_test)s in a directory (like test/).
         
 Platform: UNKNOWN
