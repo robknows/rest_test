@@ -9,12 +9,12 @@ QHOME = os.environ["QHOME"]
 
 
 @setup
-def start_backend():
+def start_server():
     os.system(QHOME + "/m32/q backend.q &")
 
 
 @teardown
-def stop_backend():
+def stop_server():
     os.system("pkill -f \"" + QHOME + "/m32/q backend.q\"")
 
 
