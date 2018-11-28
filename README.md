@@ -7,11 +7,15 @@ rest_test looks like at test/test.py.
 
 Install with
 
-`pip3 install git+git://github.com/robknows/rest_test.git#egg=rest_test`
+```bash
+pip3 install git+git://github.com/robknows/rest_test.git#egg=rest_test
+```
 
 Include in your file with
 
-`from rest_test import *`
+```python
+from rest_test import *
+```
 
 Write a test like
 
@@ -43,7 +47,9 @@ exit(main(locals()))
 
 Finally, run your the test suite you created with the above steps by running from the command line
 
-`python3 my_tests.py`
+```bash
+python3 my_tests.py
+```
 
 If all the tests pass, the exit code will be 0. Otherwise, it will be 1.
 
