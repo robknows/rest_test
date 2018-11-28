@@ -1,8 +1,9 @@
-import os
 import sys
 import time
+import traceback
 
 from termcolor import colored
+
 
 def test(test_function):
     def test_wrapper():
@@ -10,6 +11,7 @@ def test(test_function):
 
     test_wrapper.__basename__ = test_function.__name__
     return test_wrapper
+
 
 def get_test_functions(local_values):
     test_functions = []
@@ -21,24 +23,26 @@ def get_test_functions(local_values):
 
     return test_functions
 
+
 def run_test(test):
-  print("=== === ===")
-  print("Running: " + test.__basename__)
-  try:
-    test()
-    print(colored("- " + test.__basename__ + " - pass", "green"))
     print("=== === ===")
-    return 0
-  except AssertionError as e:
-    print(colored(str(e), "red"))
-    print(colored("- " + test.__basename__ + " - fail", "red"))
-    print("=== === ===")
-    return 1
-  except Exception as e:
-    print(colored(str(e), "red"))
-    print(colored("- " + test.__basename__ + " - error", "red"))
-    print("=== === ===")
-    return 2
+    print("Running: " + test.__basename__)
+    try:
+        test()
+        print(colored("- " + test.__basename__ + " - pass", "green"))
+        print("=== === ===")
+        return 0
+    except AssertionError as e:
+        print(colored(str(e), "red"))
+        print(colored("- " + test.__basename__ + " - fail", "red"))
+        print("=== === ===")
+        return 1
+    except Exception as e:
+        print(colored(traceback.format_exc(), "red"))
+        print(colored("- " + test.__basename__ + " - error", "red"))
+        print("=== === ===")
+        return 2
+
 
 def run_tests(local_values):
     results = {}
@@ -47,6 +51,7 @@ def run_tests(local_values):
         results[test_function.__basename__] = result
 
     return results
+
 
 def print_results(results):
     print("=== results ===\n")
@@ -71,6 +76,7 @@ def print_results(results):
         print(colored("=== No failures ===", "green"))
 
     print("")
+
 
 def main(local_values, start_server=None, stop_server=None):
     usage = "USAGE: " + sys.argv[0] + " [a|r]\n" + \
