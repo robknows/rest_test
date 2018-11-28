@@ -23,7 +23,7 @@ Write a test like
 @test
 def can_say_hello():
   res = requests.get("http://localhost:8000/hello")
-  assert_that(res.status_code).is_equal_to(200)
+  assert_that(res.status_code).is_equal_to(200) # Using the assertpy assertions library
   assert_that(res.json()).is_equal_to("hello")
 ```
 
