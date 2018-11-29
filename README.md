@@ -51,7 +51,7 @@ Finally, run your the test suite you created with the above steps by running fro
 python3 my_tests.py
 ```
 
-If all the tests pass, the exit code will be 0. Otherwise, it will be 1.
+The exit code will be the number of failed tests (i.e. exit code will be 0 if all tests pass)
 
 # Todo
 
