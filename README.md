@@ -39,7 +39,7 @@ def stop_server():
     os.system("pkill -f \"run-my-server\"")
 ```
 
-Run all the tests (marked by `@test`) in the file by adding the following to the end of the file
+Run all the tests in the file (each marked by `@test`) by adding the following to the end of the file
 
 ```python
 exit(main(locals()))
