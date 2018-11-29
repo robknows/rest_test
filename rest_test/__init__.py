@@ -99,7 +99,7 @@ def print_results(results):
 
     print("")
     print(colored("=== " + str(total_passed) + " tests passed ===", "green"))
-    if (total_failed > 0):
+    if total_failed > 0:
         print(colored("=== " + str(total_failed) + " tests failed ===", "red"))
     else:
         print(colored("=== No failures ===", "green"))
@@ -107,12 +107,17 @@ def print_results(results):
     print("")
 
 
-def all_passed(results):
+def num_failed(results):
+    count = 0
     for test_function_name in results:
         if not results[test_function_name] == 0:
-            return False
+            count += 1
 
-    return True
+    return count
+
+
+def test_exit_code(results):
+    return num_failed(results)
 
 
 def main(local_values):
@@ -141,8 +146,4 @@ def main(local_values):
 
     print("=== finished tests ===")
 
-    success = all_passed(results)
-    if success:
-        return 0
-    else:
-        return 1
+    return test_exit_code(results)
