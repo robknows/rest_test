@@ -59,4 +59,4 @@ The exit code will be the number of failed tests (i.e. exit code will be 0 if al
 
 - Specify a particular test to run
 
-- Binary for running all (rest_test)s in a directory (like test/).
+- Executable for running all (rest_test)s in a directory (like test/).
