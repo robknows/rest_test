@@ -27,6 +27,7 @@ def teardown(teardown_function):
     teardown_wrapper.__basename__ = teardown_function.__name__
     return teardown_wrapper
 
+
 def after_each(after_each_function):
     def after_each_wrapper():
         after_each_function()

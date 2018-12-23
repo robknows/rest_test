@@ -17,13 +17,17 @@ def start_server():
 def stop_server():
     os.system("pkill -f \"" + QHOME + "/l32/q backend.q\"")
 
+
 ## Horrified at this.
 global counter
 counter = 0
+
+
 @after_each
 def runs_after_each_test():
     global counter
     counter += 1
+
 
 @test
 def default_path():
