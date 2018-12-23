@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: rest-test
-Version: 5.0
+Version: 6.0
 Summary: Create tidy integration tests for a RESTful API.
 Home-page: https://github.com/robknows/rest_test
 Author: Rob Moore
@@ -47,7 +47,7 @@ Description: # Rest Test
             os.system("pkill -f \"run-my-server\"")
         ```
         
-        Run all the tests (marked by `@test`) in the file by adding the following to the end of the file
+        Run all the tests in the file (each marked by `@test`) by adding the following to the end of the file
         
         ```python
         exit(main(locals()))
@@ -59,7 +59,7 @@ Description: # Rest Test
         python3 my_tests.py
         ```
         
-        If all the tests pass, the exit code will be 0. Otherwise, it will be 1.
+        The exit code will be the number of failed tests (i.e. exit code will be 0 if all tests pass)
         
         # Todo
         
@@ -67,6 +67,6 @@ Description: # Rest Test
         
         - Specify a particular test to run
         
-        - Binary for running all (rest_test)s in a directory (like test/).
+        - Executable for running all (rest_test)s in a directory (like test/).
         
 Platform: UNKNOWN

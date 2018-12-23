@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rest_test',
-    version='5.0',
+    version='6.0',
     packages=find_packages(exclude=['test*']),
     license='JSON',
     description='Create tidy integration tests for a RESTful API.',
