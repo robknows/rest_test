@@ -27,6 +27,13 @@ def teardown(teardown_function):
     teardown_wrapper.__basename__ = teardown_function.__name__
     return teardown_wrapper
 
+def after_each(after_each_function):
+    def after_each_wrapper():
+        after_each_function()
+
+    after_each_wrapper.__basename__ = after_each_function.__name__
+    return after_each_wrapper
+
 
 def get_test_functions(local_values):
     test_functions = []
@@ -40,8 +47,10 @@ def get_test_functions(local_values):
 
 
 def get_test_maintenance_functions(local_values):
-    setup_function = None
-    teardown_function = None
+    no_side_effect_function = lambda: 0
+    setup_function = no_side_effect_function
+    teardown_function = no_side_effect_function
+    after_each_function = no_side_effect_function
     local_function_names = [name for name in local_values if local_values[name].__class__.__name__ == "function"]
     for function_name in local_function_names:
         function = local_values[function_name]
@@ -49,8 +58,10 @@ def get_test_maintenance_functions(local_values):
             setup_function = function
         elif function.__name__ == "teardown_wrapper":
             teardown_function = function
+        elif function.__name__ == "after_each_wrapper":
+            after_each_function = function
 
-    return setup_function, teardown_function
+    return setup_function, teardown_function, after_each_function
 
 
 def run_test(test):
@@ -73,11 +84,12 @@ def run_test(test):
         return 2
 
 
-def run_tests(local_values):
+def run_tests(local_values, after_each_function):
     results = {}
     for test_function in get_test_functions(local_values):
         result = run_test(test_function)
         results[test_function.__basename__] = result
+        after_each_function()
 
     return results
 
@@ -121,7 +133,7 @@ def test_exit_code(results):
 
 
 def main(local_values):
-    start_server, stop_server = get_test_maintenance_functions(local_values)
+    start_server, stop_server, after_each_function = get_test_maintenance_functions(local_values)
     using_server = start_server is not None and stop_server is not None
 
     if start_server is not None and stop_server is None:
@@ -137,7 +149,7 @@ def main(local_values):
         time.sleep(1)
 
     print("=== starting tests ===")
-    results = run_tests(local_values)
+    results = run_tests(local_values, after_each_function)
     print_results(results)
 
     if using_server:

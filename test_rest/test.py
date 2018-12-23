@@ -10,19 +10,26 @@ QHOME = os.environ["QHOME"]
 
 @setup
 def start_server():
-    os.system(QHOME + "/m32/q backend.q &")
+    os.system(QHOME + "/l32/q backend.q &")
 
 
 @teardown
 def stop_server():
-    os.system("pkill -f \"" + QHOME + "/m32/q backend.q\"")
+    os.system("pkill -f \"" + QHOME + "/l32/q backend.q\"")
 
+## Horrified at this.
+global counter
+counter = 0
+@after_each
+def runs_after_each_test():
+    global counter
+    counter += 1
 
 @test
 def default_path():
     res = requests.get("http://localhost:8000/")
     assert_that(res.status_code).is_equal_to(200)
-    assert_that(res.json()).is_equal_to("Hello there, my favourite browser:  python-requests/2.20.0")
+    assert_that(res.json()).is_equal_to("Hello there, my favourite browser:  python-requests/2.21.0")
 
 
 @test
@@ -40,7 +47,7 @@ def json():
 
 
 @test
-def throw_exception():
+def supposed_to_error_out():
     wrong_port = 9000
     res = requests.post(f"http://localhost:{wrong_port}/goodbye", json={"name": "python"})
     assert_that(res.status_code).is_equal_to(200)
@@ -91,4 +98,8 @@ def path_args_with_cookies():
     assert_that(res.json()).is_equal_to("pathargs -> one -> two")
 
 
-exit(main(locals()))
+exit_code = main(locals())
+
+assert_that(counter).is_equal_to(8)
+
+exit(exit_code)
