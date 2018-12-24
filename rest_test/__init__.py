@@ -48,10 +48,9 @@ def get_test_functions(local_values):
 
 
 def get_test_maintenance_functions(local_values):
-    no_side_effect_function = lambda: 0
-    setup_function = no_side_effect_function
-    teardown_function = no_side_effect_function
-    after_each_function = no_side_effect_function
+    setup_function = None
+    teardown_function = None
+    after_each_function = None
     local_function_names = [name for name in local_values if local_values[name].__class__.__name__ == "function"]
     for function_name in local_function_names:
         function = local_values[function_name]
@@ -136,6 +135,16 @@ def test_exit_code(results):
 def main(local_values):
     start_server, stop_server, after_each_function = get_test_maintenance_functions(local_values)
     using_server = start_server is not None and stop_server is not None
+
+    no_side_effect_function = lambda: 0
+    if (start_server is None):
+        start_server = no_side_effect_function
+
+    if (stop_server is None):
+        stop_server = no_side_effect_function
+
+    if (after_each_function is None):
+        after_each_function = no_side_effect_function
 
     if start_server is not None and stop_server is None:
         print(colored(f"Not running @setup ({start_server.__basename__}) because no @teardown is defined. " +
